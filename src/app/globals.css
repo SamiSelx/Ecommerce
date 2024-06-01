@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection{
+  background-color: rgb(0 0 0 / 80%);
+  color: white;
+}
+
+.card-hidden {
+  z-index: -99;
+  opacity: 0;
+  transition: 0s z-index, 0.7s opacity;
+}
+
+.card:hover .card-hidden {
+  z-index: 1;
+  opacity: 1;
+}
+
+.card-image-display{
+  transition: 0s z-index,0.7s opacity,0.7s bottom;
+
+}
+
+.card-image:hover .card-image-display{
+  opacity: 1;
+  z-index: 1;
+  bottom: 10%;
+}
+
+
+.social-hidden{
+  transition: 0s z-index, 0.3s opacity;
+}
+.social:hover .social-hidden{
+  opacity: 1;
+  z-index: 1;
+}
+
+
+/*absolute bottom-[calc(-200% - 1em - 40px)] p-[20px] flex-col flex items-center gap-6 text-lg*/
+.navBar{
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 1.125rem;
+  
+}
+
+@media (max-width:768px){
+  .navBar{
+    position: absolute;
+    flex-direction: column;
+    width: 100%;
+    bottom: calc(-200% - 1em - 40px);
+    padding: 20px;
+    z-index: -999;
+    color: white;
+    background-color: #000000bd;
+    left: 0;
+    opacity: 0;
+    transition: 0s z-index,0.7s opacity;
+  }
+}
+
+.navBar.active{
+  z-index: 2;
+  opacity: 1;
+}
