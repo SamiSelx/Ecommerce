@@ -8,7 +8,16 @@ export async function GET(){
 export async function POST(request){
     let newProduct = await request.json();
     products.push(newProduct)
-    // switch case for add product on men | women | kid
+
+    // Add product men | women | kid
+    let type = newProduct.img.slice(5)
+
+    type.startsWith("men")
+      ? menProduct.push(newProduct)
+      : type.startsWith("women")
+      ? womenProdut.push(newProduct)
+      : kidProduct.push(newProduct);
+      
     return new Response(JSON.stringify(products,{
         headers:{
             "content-type":"application/json"
