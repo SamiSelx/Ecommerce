@@ -46,8 +46,8 @@ export default function Subscribe(){
           </form>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {information.map((info) => (
-            <SubscribeInformation title={info.title} desc={info.desc} />
+          {information.map((info,index) => (
+            <SubscribeInformation key={index} title={info.title} desc={info.desc} />
           ))}
         </div>
       </section>

@@ -17,7 +17,7 @@ export async function POST(request){
       : type.startsWith("women")
       ? womenProdut.push(newProduct)
       : kidProduct.push(newProduct);
-      
+
     return new Response(JSON.stringify(products,{
         headers:{
             "content-type":"application/json"

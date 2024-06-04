@@ -5,6 +5,19 @@ import { useState } from "react";
 import Link from "next/link";
 import NavIcon from "../ui/NavIcon";
 
+// Navigation Menu From ShadCn
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle
+} from "@/components/ui/navigation-menu"
+
+import { useTheme } from "next-themes";
+
 const links = [
   {name:"Home", url:"/"},
   {name:"Men's", url:"/men"},
@@ -17,6 +30,7 @@ const links = [
 export default function Header(){
   const path = usePathname();
   const [active, setActive] = useState(false)
+  const {setTheme} = useTheme();
 
   function handleActive(){
     setActive(!active)
@@ -24,29 +38,108 @@ export default function Header(){
 
     return (
       <header className="relative h-[15vh]">
-
         <div className=" container p-6 mx-auto flex items-center justify-between">
-          <Link href={'/'}><img src="logo.png" alt="logo" /></Link>
+          <Link href={"/"}>
+            <img src="logo.png" alt="logo" />
+          </Link>
           <ul className={`navBar ${active && "active"}`}>
-            {links.map((link,index)=>{
-                const isActive = path.startsWith(link.url) && path.length == link.url.length
+            {links.map((link, index) => {
+              const isActive =
+                path.startsWith(link.url) && path.length == link.url.length;
               return (
-                <li key={index} className={isActive ? "text-[#ccc] font-[500] hover:text-[#ccc] transition-colors duration-300" : "font-[500] hover:text-[#ccc] transition-colors duration-300"}>
-                <Link href={link.url}>{link.name}</Link>
-              </li>
-              )
+                <li
+                  key={index}
+                  className={
+                    isActive
+                      ? "text-[#ccc] font-[500] hover:text-[#ccc] transition-colors duration-300"
+                      : "font-[500] hover:text-[#ccc] transition-colors duration-300"
+                  }
+                >
+                  <Link href={link.url}>{link.name}</Link>
+                </li>
+              );
             })}
-            <li className="font-[500] hover:text-[#ccc] transition-all duration-300 ">
-              <p>Pages</p>
-              <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul>
+            <li className="font-[500] hover:text-[#ccc] transition-all duration-200 ">
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Pages</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul>
+                        <li >
+                          <Link href="/about" legacyBehavior passHref >
+                            <NavigationMenuLink
+                              className={navigationMenuTriggerStyle()}
+                            >
+                              About Us
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/products" legacyBehavior passHref>
+                            <NavigationMenuLink
+                              className={navigationMenuTriggerStyle()}
+                            >
+                              Products
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/productDetails" legacyBehavior passHref>
+                            <NavigationMenuLink
+                              className={navigationMenuTriggerStyle()}
+                            >
+                              Single Product
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/contact" legacyBehavior passHref>
+                            <NavigationMenuLink
+                              className={navigationMenuTriggerStyle()}
+                            >
+                              Contact Us
+                            </NavigationMenuLink>
+                          </Link>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </li>
+            <li className="font-[500] hover:text-[#ccc] transition-all duration-200 ">
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul>
+                        {Array.from({ length: 4 }).map((_, index) => (
+                          <li key={index}>
+                            <Link href={`/features/${index + 1}`}>
+                              <NavigationMenuLink
+                                className={navigationMenuTriggerStyle()}
+                              >
+                                {`Features Page ${index + 1}`}
+                              </NavigationMenuLink>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </li>
+            <li className="font-[500] hover:text-[#ccc] transition-all duration-200 ">
+              <Link href={"explore"}>Explore</Link>
             </li>
           </ul>
-          <NavIcon isActive = {active} handleActive = {handleActive}/>
+          <NavIcon isActive={active} handleActive={handleActive} />
+          
+          <button onClick={()=>setTheme("light")}>light</button> 
+          <button onClick={()=>setTheme("dark")}>Dark</button>                     
         </div>
       </header>
     );
