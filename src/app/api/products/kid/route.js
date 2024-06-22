@@ -1,6 +1,5 @@
+import { kidProduct } from "@/utils/productData";
 
-import {kidProduct} from '@/app/productData'
-
-export async function GET(){
-    return Response.json(kidProduct)
+export async function GET() {
+  return Response.json(kidProduct);
 }

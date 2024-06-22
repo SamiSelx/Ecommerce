@@ -1,6 +1,5 @@
+import { menProduct } from "@/utils/productData";
 
-import {menProduct} from '@/app/productData'
-
-export async function GET(){
-    return Response.json(menProduct)
+export async function GET() {
+  return Response.json(menProduct);
 }

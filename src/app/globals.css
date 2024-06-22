@@ -63,6 +63,8 @@ body{
     color: white;
     background-color: #000000bd;
     left: 0;
+    top: 15vh;
+    height: 85vh;
     opacity: 0;
     transition: 0s z-index,0.7s opacity;
   }

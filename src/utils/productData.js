@@ -1,6 +1,4 @@
 
-
-
 export const menProduct = [
     {
       img:"/img/men-01.jpg",
@@ -25,7 +23,14 @@ export const menProduct = [
       title:"Classic Spring",
       stars: 5,
       price:"$120.00"
+    },
+    {
+      img:"/img/men-03.jpg",
+      title:"Classic Spring",
+      stars: 5,
+      price:"$120.00"
     }
+    
 ]
 
 export const womenProdut = [

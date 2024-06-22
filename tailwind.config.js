@@ -19,6 +19,7 @@ module.exports = {
     extend: {
       colors:{
         'dark': "rgb(0 0 0 / 80%)",
+        'darkHover': "rgb(0 0 0 / 90%)",
         'grey': "#afafaf",
       },
       keyframes: {
