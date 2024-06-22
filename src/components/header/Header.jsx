@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/navigation-menu"
 
 import { useTheme } from "next-themes";
+import useUser from "@/hooks/useAuth";
+import useLogout from "@/hooks/useLogout";
 
 const links = [
   {name:"Home", url:"/"},
@@ -29,20 +31,24 @@ const links = [
 
 export default function Header(){
   const path = usePathname();
-  const [active, setActive] = useState(false)
+  const [open, setOpen] = useState(false)
   const {setTheme} = useTheme();
+  const {user} = useUser()
+  const logout = useLogout()
+  console.log(user);
 
   function handleActive(){
-    setActive(!active)
+    setOpen((prev)=>!prev)
   }
+ 
 
     return (
       <header className="relative h-[15vh]">
         <div className=" container p-6 mx-auto flex items-center justify-between">
           <Link href={"/"}>
-            <img src="logo.png" alt="logo" />
+            <img src="../logo.png" alt="logo" />
           </Link>
-          <ul className={`navBar ${active && "active"}`}>
+          <ul className={`navBar ${open && "active"}`}>
             {links.map((link, index) => {
               const isActive =
                 path.startsWith(link.url) && path.length == link.url.length;
@@ -66,8 +72,8 @@ export default function Header(){
                     <NavigationMenuTrigger>Pages</NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul>
-                        <li >
-                          <Link href="/about" legacyBehavior passHref >
+                        <li>
+                          <Link href="/about" legacyBehavior passHref>
                             <NavigationMenuLink
                               className={navigationMenuTriggerStyle()}
                             >
@@ -135,11 +141,28 @@ export default function Header(){
             <li className="font-[500] hover:text-[#ccc] transition-all duration-200 ">
               <Link href={"explore"}>Explore</Link>
             </li>
+            {user ? (
+              <li
+                className="font-[500] hover:text-[#ccc] transition-all duration-200 cursor-pointer"
+                onClick={logout}
+              >
+                Welcom {user.fullName} LogOut
+              </li>
+            ) : (
+              <>
+                <li className="font-[500] hover:text-[#ccc] transition-all duration-200 ">
+                  <Link href={"/auth/login"}>Login</Link>
+                </li>
+                <li className="font-[500] hover:text-[#ccc] transition-all duration-200 ">
+                  <Link href={"/auth/signup"}>Sign Up</Link>
+                </li>
+              </>
+            )}
           </ul>
-          <NavIcon isActive={active} handleActive={handleActive} />
-          
+          <NavIcon open={open} handleActive={handleActive} />
+          {/*           
           <button onClick={()=>setTheme("light")}>light</button> 
-          <button onClick={()=>setTheme("dark")}>Dark</button>                     
+          <button onClick={()=>setTheme("dark")}>Dark</button>                      */}
         </div>
       </header>
     );
