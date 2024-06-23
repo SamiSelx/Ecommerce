@@ -22,7 +22,7 @@ export default function useLogin() {
       console.log(data);
       setError(null);
       localStorage.setItem("token", JSON.stringify(data.token));
-      setUser({ fullName: data.user, token: data.token });
+      setUser({user:data.user, token: data.token });
     } else {
       console.log(data);
       setError(data.mssg);

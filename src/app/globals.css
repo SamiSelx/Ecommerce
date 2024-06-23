@@ -52,7 +52,11 @@ body{
   
 }
 
-@media (max-width:768px){
+.nav-icon{
+  display: none;
+}
+
+@media (max-width:988px){
   .navBar{
     position: absolute;
     flex-direction: column;
@@ -62,15 +66,27 @@ body{
     z-index: -999;
     color: white;
     background-color: #000000bd;
-    left: 0;
-    top: 15vh;
+    right: 0;
+    top: 200%;
     height: 85vh;
+    margin: 0;
+    justify-content: flex-start;
     opacity: 0;
-    transition: 0s z-index,0.7s opacity;
+    transition: 0s z-index,0.4s opacity,0.8s top;
+  }
+  .navBar div{
+    flex-direction: column;
+    width: 100%;
+  }
+  .nav-icon{
+    display: flex;
   }
 }
+
+
 
 .navBar.active{
   z-index: 2;
   opacity: 1;
+  top: 15vh;
 }

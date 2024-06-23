@@ -26,7 +26,7 @@ export default function useSignup() {
     if (response.ok) {
       setError(null);
       localStorage.setItem("token", JSON.stringify(`Bearer ${data.token}`));
-      setUser({ fullName: data.user, token: data.token });
+      setUser({user:data.user, token: data.token });
     } else {
       setError(data.mssg);
     }
