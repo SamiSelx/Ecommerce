@@ -9,7 +9,7 @@ export const AuthContextsProvider = ({children})=>{
     
     useEffect( ()=>{
         async function getUser(token) {
-          const response = await fetch("http://localhost:5000/api/user/me", {
+          const response = await fetch(process.env.URL_BACK+"/api/user/me", {
             headers: {
               authorization: token,
             },
