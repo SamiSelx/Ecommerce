@@ -17,7 +17,7 @@ export default function useUpdate() {
     formData.append("profileImage", userUpdate.profileImage);
 
     console.log(userUpdate);
-    const response = await fetch(process.env.URL_BACK+"/api/user/me", {
+    const response = await fetch(process.env.NEXT_PUBLIC_URL_BACK+"/api/user/me", {
       method: "PATCH",
       body: formData,
       headers: {

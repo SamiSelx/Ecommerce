@@ -1,6 +1,5 @@
 'use client'
 import { createContext, useEffect, useState } from "react";
-
 export const AuthContexts = createContext({})
 
 export const AuthContextsProvider = ({children})=>{
@@ -9,7 +8,7 @@ export const AuthContextsProvider = ({children})=>{
     
     useEffect( ()=>{
         async function getUser(token) {
-          const response = await fetch(process.env.URL_BACK+"/api/user/me", {
+          const response = await fetch(process.env.NEXT_PUBLIC_URL_BACK+"/api/user/me", {
             headers: {
               authorization: token,
             },

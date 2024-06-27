@@ -15,7 +15,7 @@ export default function useSignup() {
     formData.append('email',userInformation.email)
     formData.append('password',userInformation.password)
     formData.append('profileImage',userInformation.profileImage)
-    const response = await fetch(process.env.URL_BACK+"/api/user/signup", {
+    const response = await fetch(process.env.NEXT_PUBLIC_URL_BACK+"/api/user/signup", {
       method: "POST",
       body: formData,
     });
