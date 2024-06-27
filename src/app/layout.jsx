@@ -5,6 +5,7 @@ import Footer from "@/components/footer/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthContextsProvider } from "@/contexts/AuthContexts";
 import { Toaster } from "react-hot-toast";
+import App from "./app";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,7 +17,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className} style={{ overflowX: "hidden" }}>
-        <Toaster position="top-center"/>
+        <Toaster position="top-center" />
+
         <AuthContextsProvider>
           <ThemeProvider
             attribute="class"
@@ -24,9 +26,7 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            {children}
-            <Footer />
+            <App children={children}/>
           </ThemeProvider>
         </AuthContextsProvider>
       </body>

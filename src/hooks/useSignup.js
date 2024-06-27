@@ -9,24 +9,22 @@ export default function useSignup() {
 
   async function signup(userInformation) {
     setIsLoading(true);
-    const body = {
-      fullName: userInformation.firstName + " " + userInformation.lastName,
-      email: userInformation.email,
-      password: userInformation.password,
-    };
+    const formData = new FormData()
+    formData.append('firstName',userInformation.firstName )
+    formData.append('lastName',userInformation.lastName)
+    formData.append('email',userInformation.email)
+    formData.append('password',userInformation.password)
+    formData.append('profileImage',userInformation.profileImage)
     const response = await fetch("http://localhost:5000/api/user/signup", {
       method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "content-type": "application/json",
-      },
+      body: formData,
     });
     const data = await response.json();
     console.log(data);
     if (response.ok) {
       setError(null);
-      localStorage.setItem("token", JSON.stringify(`Bearer ${data.token}`));
-      setUser({user:data.user, token: data.token });
+      localStorage.setItem("token", JSON.stringify(data.token));
+      setUser({user:{...userInformation,profileImage:userInformation.profileImage ? URL.createObjectURL(userInformation.profileImage):null}, token: data.token });
     } else {
       setError(data.mssg);
     }

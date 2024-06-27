@@ -1,41 +1,54 @@
 "use client";
+import Loading from "@/app/loading";
 import ProfileForm from "@/components/profileForm/ProfileForm";
 import useAuth from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import {  useState } from "react";
 import { FaPen } from "react-icons/fa";
+import useUpdate from "@/hooks/useUpdate";
 
 export default function Profile() {
-  const [userUpdate, setUserUpdate] = useState({
-    image: null,
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
-  const { user } = useAuth();
+  const {loading:waiting,user,setUser } = useAuth();
+
+  if(waiting) return <Loading/>
   if (!user) redirect("/auth/login");
-  console.log(userUpdate);
+
+  const [userUpdate, setUserUpdate] = useState(user.user);
+  const [profileImage,setProfileImage] = useState(user.user.profileImage)
+  const {error,loading,update} = useUpdate()
+
+  async function handleSubmit(e){
+    e.preventDefault()
+    if(userUpdate.firstName == "" || userUpdate.lastName == "" || userUpdate.email == "") return
+
+    // const fr = new FormData(e.target)
+    update(userUpdate)
+
+  }
 
   return (
     <>
-      <form className="h-[70vh] flex gap-8 container mx-auto p-4 shadow-sm">
+      <form onSubmit={handleSubmit} encType="multipart/form-data" className="h-[85vh] flex gap-8 container mx-auto p-4 shadow-sm">
         <div className="border-r border-dark flex flex-col items-center pr-14 basis-1/3 gap-12">
           <h1 className="text-center text-2xl font-bold">
-            Welcome {user.user.fullName}
+            Welcome {user.user.firstName + ' '+ user.user.lastName}
           </h1>
-          <div className="relative w-[200px]">
+          <div className="relative h-[200px] w-[200px]">
             <img
-              src="img/team-member-02.jpg"
+              src={!profileImage ? "../img/user.png" : profileImage}
               alt="profile"
               className="rounded-full w-full h-full shadow-md"
             />
             <input
               type="file"
-              name="image"
+              name="profileImage"
               id="img"
               className="hidden"
               onChange={(e) =>
-                setUserUpdate({ ...userUpdate, image: e.target.files[0] })
+                {
+                  setProfileImage(URL.createObjectURL(e.target.files[0]))
+                  setUserUpdate({ ...userUpdate, profileImage: e.target.files[0] })
+                }
               }
             />
             <label
@@ -46,9 +59,9 @@ export default function Profile() {
             </label>
           </div>
         </div>
-        <ProfileForm userUpdate={userUpdate} setUserUpdate={setUserUpdate}/>
+        <ProfileForm userUpdate={userUpdate} setUserUpdate={setUserUpdate} loading={loading}/>
+        {error && <div className="text-red-500 text-xl font-semibold">{error}</div>}
       </form>
-      <div className="h-[15vh]"></div>
     </>
   );
 }

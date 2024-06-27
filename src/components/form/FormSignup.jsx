@@ -2,9 +2,10 @@
 import useAuth from "@/hooks/useAuth";
 import useSignup from "@/hooks/useSignup";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
+import { FaPen } from "react-icons/fa";
 
 
 export default function FormSignUp() {
@@ -13,6 +14,7 @@ export default function FormSignUp() {
     lastName: "",
     email: "",
     password: "",
+    profileImage:null
   });
   const [visible,setVisible] = useState(false)
   const { isLoading, error, signup } = useSignup();
@@ -29,13 +31,37 @@ export default function FormSignUp() {
         lastName: "",
         email: "",
         password: "",
+        
       });
     }
   };
 
   return (
     <form className="flex flex-col gap-3" onSubmit={(e) => handleSubmit(e)}>
+      <div className="relative h-[150px] w-[150px] self-center">
+            <img
+              src={!userInformation.profileImage ? "../img/user.png" : URL.createObjectURL(userInformation.profileImage)}
+              alt="profile"
+              className="rounded-full w-full h-full shadow-md"
+            />
+            <input
+              type="file"
+              name="image"
+              id="img"
+              className="hidden"
+              onChange={e=>{
+                setUserInformation({...userInformation,profileImage:e.target.files[0]})
+              }}
+            />
+            <label
+              htmlFor="img"
+              className="absolute right-[2%] bottom-[8%] text-white p-1.5 cursor-pointer hover:bg-blue-600 bg-blue-500 rounded-full transition duration-300"
+            >
+              <FaPen />
+            </label>
+          </div>
       <div className="flex gap-4">
+      
         <div>
           <label htmlFor="FN">First Name</label>
           <br></br>

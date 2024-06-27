@@ -1,10 +1,9 @@
 import useAuth from "@/hooks/useAuth";
 import { useState } from "react";
 
-export default function ProfileForm({ userUpdate, setUserUpdate }) {
+export default function ProfileForm({ userUpdate, setUserUpdate,loading }) {
     const [edit,setEdit] = useState(false)
-    const {user} = useAuth()
-    console.log('inside setting',user);
+
   return (
     <div className="flex flex-col justify-center gap-4 flex-1">
       <div>
@@ -12,11 +11,11 @@ export default function ProfileForm({ userUpdate, setUserUpdate }) {
         <br></br>
         <input
           type="text"
-          name=""
+          name="firstname"
           id="firstname"
           placeholder="First Name"
           disabled={!edit}
-          value={!edit ? user.user.fullName : userUpdate.firstName}
+          value={userUpdate.firstName}
           onChange={e=>setUserUpdate({...userUpdate,firstName:e.target.value})}
           className={`border-black border w-full focus:outline-none focus:placeholder:opacity-0 placeholder:transition placeholder:duration-300  px-3 py-1 ${!edit ? 'cursor-not-allowed text-grey' : ""}`}
         />
@@ -26,7 +25,7 @@ export default function ProfileForm({ userUpdate, setUserUpdate }) {
         <br></br>
         <input
           type="text"
-          name=""
+          name="lastname"
           id="lastname"
           placeholder="Last Name"
           value={userUpdate.lastName}
@@ -40,16 +39,17 @@ export default function ProfileForm({ userUpdate, setUserUpdate }) {
         <br></br>
         <input
           type="text"
-          name=""
+          name="email"
           id="email"
           placeholder="Email"
-          value={!edit ? user.user.email : userUpdate.email}
+          value={userUpdate.email}
           onChange={e=>setUserUpdate({...userUpdate,email:e.target.value})}
           disabled={!edit}
           className={`border-black border w-full focus:outline-none focus:placeholder:opacity-0 placeholder:transition placeholder:duration-300  px-3 py-1 ${!edit ? 'cursor-not-allowed text-grey' : ""}`}
         />
       </div>
       <button type="button" onClick={()=>setEdit(true)}>Edit</button>
+      <input type="submit" value={loading ? "Saving..." : "Save"} className={`cursor-pointer text-white py-3 rounded-full ${loading ? 'bg-grey' : 'bg-dark'}`}/>
     </div>
   );
 }

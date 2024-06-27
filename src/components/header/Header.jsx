@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/navigation-menu"
 
 import { useTheme } from "next-themes";
-import useUser from "@/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 import useLogout from "@/hooks/useLogout";
 
 const links = [
@@ -35,20 +35,17 @@ export default function Header(){
   const path = usePathname();
   const [open, setOpen] = useState(false)
   const {setTheme} = useTheme();
-  const {user} = useUser()
+  const {user} = useAuth()
   const logout = useLogout()
-  console.log(user);
 
   function handleActive(){
     setOpen((prev)=>!prev)
   }
  
-
     return (
       <header className="relative h-[15vh]">
         <div className=" container p-6 h-full mx-auto flex items-center justify-between">
           <Link href={"/"} className="text-4xl font-bold text-dark">
-            {/* <img src="../logo.png" alt="logo" /> */}
             Samx
           </Link>
           <ul
@@ -159,12 +156,12 @@ export default function Header(){
               <div className="text-center flex items-center gap-8">
                 <Link
                   href={"/profile"}
-                  className="text-2xl cursor-pointer hover:text-[#ccc] transition-all duration-200"
+                  className="text-2xl cursor-pointer hover:text-[#ccc] transition-all duration-200 w-12 h-12 border border-black rounded-full"
                 >
-                  <CgProfile />
+                  {user.user.profileImage ? <img src={user.user.profileImage} alt="profile-pic" className="h-full w-full rounded-full"/>:  <CgProfile />}
                 </Link>
                 <div>
-                  Welcome {user.user.fullName}
+                  Welcome {user.user.firstName + ' ' + user.user.lastName}
                   <li
                     className="font-[500] hover:text-[#ccc] transition-all duration-200 cursor-pointer"
                     onClick={() => {
